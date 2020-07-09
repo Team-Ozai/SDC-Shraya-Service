@@ -31,37 +31,70 @@ app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
+// // to do Test the code to see if it works
+// app.get('/api/update/:id', function (req, res) {
+//   db.Update.findOne({where: {id: req.params.id }})
+//   .then(function(data){
+//     res.status(200).send(data);
+//   })
+// });
+// app.get('/api/comment/:id', function (req, res) {
+//   db.Comment.findAll({where: {updateID: req.params.id }})
+//   .then(function(data){
+//     res.status(200).send(data);
+//   })
+// });
+// const GetAllUpdates = app.get('/api/update/', function (req, res) {
+//   db.Update.findAll()
+//   .then(function(data){
+//     res.status(200).send(data);
+//   })
+// });
+// app.get('/api/comment/', function (req, res) {
+//   db.Comment.findAll()
+//   .then(function(data){
+//     res.status(200).send(data);
+//   })
+// });
+// app.post('/api/comment/', function (req, res) {
+//   db.Comment.create({
+//     updateID: req.body.updateID,
+//     userName: req.body.userName,
+//     comment:req.body.comment,
+//     createdAt: req.body.createdAt,
+//   })
+//   .then(function(){
+//     res.send('sent to server');
+//   })
+// });
 
-// to do Test the code to see if it works
+// app.get(‘*’, (req, res) => {
+//   res.sendFile(path.join(__dirname, ‘../dist’, ‘index.html’));
+// });
+
+// module.exports.GetAllUpdates = GetAllUpdates;
+
+
+// ///////////////////////////////////////////////////////
+// //                      CRUD Api                     //
+// ///////////////////////////////////////////////////////
+// //                        GET                        //
+// // get update by id
 app.get('/api/update/:id', function (req, res) {
   db.Update.findOne({where: {id: req.params.id }})
   .then(function(data){
     res.status(200).send(data);
   })
 });
-
-
+// // get comment by id
 app.get('/api/comment/:id', function (req, res) {
   db.Comment.findAll({where: {updateID: req.params.id }})
   .then(function(data){
     res.status(200).send(data);
   })
 });
-
-const GetAllUpdates = app.get('/api/update/', function (req, res) {
-  db.Update.findAll()
-  .then(function(data){
-    res.status(200).send(data);
-  })
-});
-
-app.get('/api/comment/', function (req, res) {
-  db.Comment.findAll()
-  .then(function(data){
-    res.status(200).send(data);
-  })
-});
-
+// //                        POST                        //
+// // post comment
 app.post('/api/comment/', function (req, res) {
   db.Comment.create({
     updateID: req.body.updateID,
@@ -73,16 +106,20 @@ app.post('/api/comment/', function (req, res) {
     res.send('sent to server');
   })
 });
+// //                  .  PUT/PATCH                      //
 
-
-// app.get(‘*’, (req, res) => {
-//   res.sendFile(path.join(__dirname, ‘../dist’, ‘index.html’));
-// });
-
-
-
-
-// module.exports.GetAllUpdates = GetAllUpdates;
-
+// //                       DELETE                     ///
+app.delete('/api/update/:id', function (req, res) {
+  db.Update.findOne({where: {id: req.params.id}})
+    .then(data => data.destroy())
+      .catch(err => console.log(err))
+        .then(res.end());
+})
+app.delete('/api/comment/:id', function (req, res) {
+  db.Comment.findOne({where: {id: req.params.id}})
+    .then(data => data.destroy())
+      .catch(err => console.log(err))
+        .then(res.end());
+})
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`))

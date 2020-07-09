@@ -37,3 +37,27 @@ npm install -g webpack
 npm install
 ```
 
+## CRUD API
+GET
+- Get update from id
+> /api/update/:id
+- Get comment from id
+> /api/comment/:id
+
+POST
+- Post a comment
+> /api/comment/
+
+PATCH
+- Update update
+> /api/update/:id
+- Update comment
+> /api/comment/:id
+
+DELETE
+- Delete update
+> /api/update/:id
+- Delete comment
+> /api/comment/:id
+
+
