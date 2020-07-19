@@ -8,16 +8,14 @@ import CommentsItem from './style/CommentsItem.style.js';
 
 
   function Comments(props){
-
-
-
     const commentsList = props.comment
+    console.log('commentsList', commentsList)
     const listItems = commentsList.map((postedComment) =>
-      <CommentsItem key = {postedComment.id}>
+      <CommentsItem key = {postedComment.updateid}>
         <CommentsAuthor>
-          {postedComment.userName}
+          {postedComment.username}
         </CommentsAuthor>
-        {moment(postedComment.createdAt).fromNow()}
+        {moment(postedComment.createdat).fromNow()}
         <CommentsBody>
           {postedComment.comment}
         </CommentsBody>

@@ -14,24 +14,25 @@ class PostComment extends React.Component {
   constructor(props) {
     super (props);
     this.state = {
-      updateID: 1,
-      userName: '',
+      updateid: 1,
+      username: '',
       comment: '',
-      createdAt: moment().format()
+      createdat: moment().format('llll')
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.submit = this.submit.bind(this)
   }
-
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.id;
-    this.setState({
-      [name]: value,
-      updateID: this.props.updatesID,
-      createdAt: moment().format()
-    });
+    this.props.updatesID.map(id => {
+      const target = event.target;
+      const value = target.value;
+      const name = target.id;
+      this.setState({
+        [name]: value,
+        updateid: id.id,
+        createdat: moment().format('llll')
+      });
+    })
   }
 
   submit() {
@@ -46,7 +47,7 @@ class PostComment extends React.Component {
             <CreateSectionHeader>Comments</CreateSectionHeader>
           <CreateEditor>
             <div>
-              <CreateUsername id='userName' type="text"  placeholder="Username" onChange={this.handleInputChange}></CreateUsername>
+              <CreateUsername id='username' type="text"  placeholder="Username" onChange={this.handleInputChange}></CreateUsername>
               <CreateComment id='comment' type="text" placeholder="What would you like to say" onChange={this.handleInputChange}></CreateComment>
               <CreateButton onClick={this.submit}>Post Comment</CreateButton>
             </div>

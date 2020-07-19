@@ -1,0 +1,23 @@
+
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 1
+    - duration: 60
+      arrivalRate: 10
+    - duration: 60
+      arrivalRate: 100
+    - duration: 60
+      arrivalRate: 1000
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - flow:
+    - get:
+        url: "/10"
+    - get:
+        url: "/updates/10"
+    - get:
+        url: "/comments/10"

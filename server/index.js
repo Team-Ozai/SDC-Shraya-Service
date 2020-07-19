@@ -1,125 +1,36 @@
+const nr = require('newrelic')
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const db = require('../db/queries')
+const path = require('path')
+const port = 3000
 
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const path = require('path');
-const port = 3001;
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const db = require('../db/Index.js');
-
-
-app.use(morgan());
-// app.use('/:id', express.static(path.join(__dirname, '../dist')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-app.use(cors());//http-proxy-middleware instead of cors?
-
-
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   next();
-// });
-
-
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 app.use(express.static(path.join(__dirname, '../dist')));
-
-
 app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
-// // to do Test the code to see if it works
-// app.get('/api/update/:id', function (req, res) {
-//   db.Update.findOne({where: {id: req.params.id }})
-//   .then(function(data){
-//     res.status(200).send(data);
-//   })
-// });
-// app.get('/api/comment/:id', function (req, res) {
-//   db.Comment.findAll({where: {updateID: req.params.id }})
-//   .then(function(data){
-//     res.status(200).send(data);
-//   })
-// });
-// const GetAllUpdates = app.get('/api/update/', function (req, res) {
-//   db.Update.findAll()
-//   .then(function(data){
-//     res.status(200).send(data);
-//   })
-// });
-// app.get('/api/comment/', function (req, res) {
-//   db.Comment.findAll()
-//   .then(function(data){
-//     res.status(200).send(data);
-//   })
-// });
-// app.post('/api/comment/', function (req, res) {
-//   db.Comment.create({
-//     updateID: req.body.updateID,
-//     userName: req.body.userName,
-//     comment:req.body.comment,
-//     createdAt: req.body.createdAt,
-//   })
-//   .then(function(){
-//     res.send('sent to server');
-//   })
-// });
-
-// app.get(‘*’, (req, res) => {
-//   res.sendFile(path.join(__dirname, ‘../dist’, ‘index.html’));
-// });
-
-// module.exports.GetAllUpdates = GetAllUpdates;
-
-
-// ///////////////////////////////////////////////////////
-// //                      CRUD Api                     //
-// ///////////////////////////////////////////////////////
-// //                        GET                        //
-// // get update by id
-app.get('/api/update/:id', function (req, res) {
-  db.Update.findOne({where: {id: req.params.id }})
-  .then(function(data){
-    res.status(200).send(data);
-  })
-});
-// // get comment by id
-app.get('/api/comment/:id', function (req, res) {
-  db.Comment.findAll({where: {updateID: req.params.id }})
-  .then(function(data){
-    res.status(200).send(data);
-  })
-});
-// //                        POST                        //
-// // post comment
-app.post('/api/comment/', function (req, res) {
-  db.Comment.create({
-    updateID: req.body.updateID,
-    userName: req.body.userName,
-    comment:req.body.comment,
-    createdAt: req.body.createdAt,
-  })
-  .then(function(){
-    res.send('sent to server');
-  })
-});
-// //                  .  PUT/PATCH                      //
-
-// //                       DELETE                     ///
-app.delete('/api/update/:id', function (req, res) {
-  db.Update.findOne({where: {id: req.params.id}})
-    .then(data => data.destroy())
-      .catch(err => console.log(err))
-        .then(res.end());
+app.get('/', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
 })
-app.delete('/api/comment/:id', function (req, res) {
-  db.Comment.findOne({where: {id: req.params.id}})
-    .then(data => data.destroy())
-      .catch(err => console.log(err))
-        .then(res.end());
-})
+app.get('/updates', db.getUpdates)
+app.get('/updates/:id', db.getUpdateById)
+app.post('/updates', db.createUpdate)
+app.put('/updates/:id', db.updateUpdate)
+app.delete('/updates/:id', db.deleteUpdate)
 
-app.listen(port, () => console.log(`listening at http://localhost:${port}`))
+app.get('/comments', db.getComments)
+app.get('/comments/:id', db.getCommentById)
+app.post('/comments', db.createComment)
+app.put('/comments/:id', db.updateComment)
+app.delete('/comments/:id', db.deleteComment)
+app.listen(port, () => {
+  console.log(`App running on port ${port}.`)
+})

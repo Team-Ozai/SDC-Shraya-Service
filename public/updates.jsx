@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
@@ -12,35 +14,37 @@ class Updates extends React.Component {
   constructor(props) {
     super (props)
   }
-  render() {
-    var title = this.props.update.title;
-    var author = this.props.update.author
-    var body = this.props.update.body
-    var date = moment(this.props.update.createdAt).fromNow()
-    var image = this.props.update.imageUrl
-    var likes = this.props.update.likes
+  render(){
     return (
       <div className="update">
-        <UpdateTitle>{title}</UpdateTitle>
         <div>
-          <UpdateAuthor>
-          {author + ' '}
-          {date}
-          </UpdateAuthor>
-          <UpdateImage>
-            <img src={image}/>
-          </UpdateImage>
-          <UpdateBody>
-            {body}
-          </UpdateBody>
-          <UpdateLikes>
-             {likes} people like this update
-          </UpdateLikes>
+          {
+            this.props.update.map((data) => {
+              return (
+                <div>
+                  <UpdateTitle>{data.title}</UpdateTitle>
+                  <UpdateAuthor>
+                    {data.author + ' '}
+                    {moment(data.createdAt).fromNow()}
+                  </UpdateAuthor>
+                  <UpdateImage>
+                      <img src={data.imageurl}/>
+                  </UpdateImage>
+                  <UpdateBody>
+                      {data.body}
+                  </UpdateBody>
+                  <UpdateLikes>
+                      {data.likes} people like this update
+                  </UpdateLikes>
+                </div>
+              )
+            })
+          }
         </div>
       </div>
-    )
+      )
+    }
   }
-}
 
 UpdateTitle.displayName = 'UpdateTitle';
 UpdateAuthor.displayName = 'UpdateAuthor';
