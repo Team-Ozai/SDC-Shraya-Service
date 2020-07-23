@@ -8,7 +8,7 @@
 // })
 
 const { Pool, Client } = require('pg')
-const connectionString = 'postgresql://postgres:ec2-13-57-119-30.us-west-1.compute.amazonaws.com:5432/postgres'
+const connectionString = 'postgresql://postgres:postgres@ec2-13-57-119-30.us-west-1.compute.amazonaws.com:5432/postgres'
 const pool = new Pool({
   connectionString: connectionString,
 })
