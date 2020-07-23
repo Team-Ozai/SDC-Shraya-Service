@@ -1,10 +1,16 @@
-const Pool = require('pg').Pool
+// const Pool = require('pg').Pool
+// const pool = new Pool({
+//   user: "postgres",
+//   password: "postgres",
+//   host: "localhost",
+//   port: 5432,
+//   database: "Service",
+// })
+
+const { Pool, Client } = require('pg')
+const connectionString = 'postgresql://postgres:postgres@ec2-13-57-119-30.us-west-1.compute.amazonaws.com:5432/postgres'
 const pool = new Pool({
-  user: "postgres",
-  password: "postgres",
-  host: "localhost",
-  port: 5432,
-  database: "Service",
+  connectionString: connectionString,
 })
 
 const getUpdates = (request, response) => {
