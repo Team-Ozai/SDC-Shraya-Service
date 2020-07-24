@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['SDC-Shraya'],
+  app_name: ['AWS-Service'],
   /**
    * Your New Relic license key.
    */
