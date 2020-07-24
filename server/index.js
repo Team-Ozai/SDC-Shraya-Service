@@ -17,10 +17,6 @@ app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
-app.get('/loaderio-c6948168e8719a720b252c75fa0861fa/', (req, res) => {
-  res.send('loaderio-c6948168e8719a720b252c75fa0861fa')
-})
-
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
