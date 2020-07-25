@@ -21,7 +21,7 @@ class Index extends React.Component {
   componentDidMount() {
     $.ajax({
       type: 'GET',
-      url: `/updates${window.location.pathname}`
+      url: `http://18.219.117.44:3001/updates${window.location.pathname}`
     }).then((results) =>{
       this.setState({
         updates: results
@@ -30,7 +30,7 @@ class Index extends React.Component {
         return(
         $.ajax({
           type: 'GET',
-          url: `/comments/${id.id}`
+          url: `http://18.219.117.44:3001/comments/${id.id}`
         }).then((res) =>{
           console.log('this is res', res);
           this.setState({
