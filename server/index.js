@@ -17,9 +17,15 @@ app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
+
 app.get('/updates', db.getUpdates)
 app.get('/updates/:id', db.getUpdateById)
 app.post('/updates', db.createUpdate)
